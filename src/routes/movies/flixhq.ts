@@ -47,7 +47,18 @@ const routes = async (fastify: FastifyInstance, options: RegisterOptions) => {
 
     reply.status(200).send(res);
   });
+fastify.get('/home', async (request: FastifyRequest, reply: FastifyReply) => {
+    let res = redis
+      ? await cache.fetch(
+          redis as Redis,
+          `flixhq:home`,
+          async () => await flixhq.fetchHome(),
+          60 * 60 * 3
+        )
+      : await flixhq.fetchRecentTvShows();
 
+    reply.status(200).send(res);
+  });
   fastify.get('/recent-movies', async (request: FastifyRequest, reply: FastifyReply) => {
     let res = redis
       ? await cache.fetch(
