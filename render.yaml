@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: consumet-api # Name of the service
+    name: cdn.mriptv2 # Name of the service
     env: docker
     repo: https://github.com/consumet/api.consumet.org.git
     plan: free
